@@ -21,3 +21,24 @@ function operate(operator, a, b) {
             return divide(a, b)
     }
 }
+
+const display = document.querySelector(".display")
+const clearBtn = document.querySelector(".clear")
+const allDigits = document.querySelectorAll(".digit")
+
+allDigits.forEach(digit => {
+    digit.addEventListener("click", (e) => {
+        let displayNumber = document.createElement("p");
+        displayNumber.textContent = e.target.textContent;
+        displayNumber.classList.add("number");
+        display.appendChild(displayNumber);
+    });
+});
+
+clearBtn.addEventListener("click", () => {
+    let allNumbers = display.querySelectorAll(".number")
+    allNumbers.forEach((number) => {
+        display.removeChild(number)
+    })
+})
+
