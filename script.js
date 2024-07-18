@@ -2,9 +2,6 @@ function add(a, b) { return a + b }
 function subtract(a, b) { return a - b }
 function multiply(a, b) { return a * b }
 function divide(a, b) { return a / b }
-let firstNum;
-let operator;
-let secondNum;
 
 function operate(operator, a, b) {
     switch (operator) {
@@ -42,3 +39,11 @@ clearBtn.addEventListener("click", () => {
     })
 })
 
+// TO DO
+// MAKE IT SO WHEN AN OPERATOR BUTTON IS CLICKED
+// THE NUMBERS THAT ALREADY EXIST
+// GET SENT AS THE FIRST NUMBER TO THE REQUIRED OPERATOR FUNCTION
+// THE DISPLAY IS CLEARED
+// THE SECOND NUMBER IS INPUTTED AND IS THE SECOND NUMBER IN THE FUNCTION
+// AND WHEN THE EQUALS IS CLICKED
+// THE VALUE THAT THE FUNCTION RETURNED IS DISPLAYED
