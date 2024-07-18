@@ -1,0 +1,27 @@
+.calc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 350px;
+    height: 400px;
+    margin: 0 auto;
+}
+
+.display {
+    display: flex;
+    align-self: center;
+    width: 348px;
+    height: 90px;
+    background-color: #e5e5e5;
+    border: 1px solid gray;
+}
+
+.row {
+display: flex;
+flex: 1;
+justify-content: center;
+}
+
+.btn {
+    min-width: 25%;
+}
