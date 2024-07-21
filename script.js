@@ -1,7 +1,10 @@
 function add(a, b) { return a + b }
 function subtract(a, b) { return a - b }
 function multiply(a, b) { return a * b }
-function divide(a, b) { return a / b }
+function divide(a, b) {
+    if (b === 0) return displayNumber.textContent = "ERROR"
+    return a / b
+}
 
 // function operate(operator, a, b) {
 //     switch (operator) {
@@ -47,22 +50,27 @@ const plusBtn = document.querySelector(".plus")
 const divideBtn = document.querySelector(".divide")
 const equalsBtn = document.querySelector(".equals")
 
+
+
+
+
+// allOperatorBtn.forEach((btn) => {
+//     btn.addEventListener("click", (e) => {
+//         operateorBtnTarget = e.target
+//         firstNum = document.querySelector(".number")
+//         firstNum = +firstNum.textContent
+//         display.removeChild(displayNumber)
+//         displayNumber = null
+//         operatorBtnCount++
+//     })
+// })
+
 let firstNum;
 let secondNum;
 let operateorBtnTarget;
-
-allOperatorBtn.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-        operateorBtnTarget = e.target
-        firstNum = document.querySelector(".number")
-        firstNum = +firstNum.textContent
-        display.removeChild(displayNumber)
-        displayNumber = null
-    })
-})
-
 let result;
-equalsBtn.addEventListener("click", () => {
+
+function evaluateResult() {
     // evaluate the second number
     secondNum = document.querySelector(".number")
     secondNum = +secondNum.textContent
@@ -85,13 +93,38 @@ equalsBtn.addEventListener("click", () => {
             break;
     }
     displayNumber.textContent = result
+}
+
+// equal button 
+equalsBtn.addEventListener("click", evaluateResult)
+
+
+let operatorBtnCount = 0
+allOperatorBtn.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+        if (operatorBtnCount < 1) {
+            operateorBtnTarget = e.target
+            firstNum = document.querySelector(".number")
+            firstNum = +firstNum.textContent
+            display.removeChild(displayNumber)
+            displayNumber = null
+            operatorBtnCount++
+        }
+        else if (operatorBtnCount >= 1) {
+            evaluateResult()
+        }
+    })
 })
 
+
+// CLEAR BUTTON
 clearBtn.addEventListener("click", () => {
     if (displayNumber !== null) {
         display.removeChild(displayNumber);
         displayNumber = null;
         firstNum = null
         secondNum = null
+        operatorBtnCount = 0
     }
 })
+//
