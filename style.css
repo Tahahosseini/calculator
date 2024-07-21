@@ -1,7 +1,10 @@
 * {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
-    background-color: #212121;
+}
+
+body {
+    background-color: #E8E8E8;
 }
 
 .container {
@@ -20,12 +23,13 @@
     align-items: center;
     width: 350px;
     height: 110px;
-    background-color: #212121;
-    border: 1px solid white;
+    background-color: #222831;
+    border: 10px solid black;
+    border-bottom: 10px solid black;
     box-sizing: border-box;
     padding-right: 20px;
-    font-size: 30px;
-    color: white;
+    font-size: 40px;
+    color: #E8E8E8;
 }
 
 .row {
@@ -50,10 +54,11 @@ flex-wrap: wrap;
 .digit,
 .equals,
 .clear {
-    background-color: #212121;
-    color: white;
+    background-color: #344d66;
+    color: #dddddd;
 }
 
 .op {
-    background-color: #14FFEC;
+    background-color: #cf6f6f;
+    font-weight: bolder;
 }
