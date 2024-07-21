@@ -1,3 +1,20 @@
+const display = document.querySelector(".display")
+const allDigits = document.querySelectorAll(".digit")
+const allOperatorBtn = document.querySelectorAll(".op")
+const multiplyBtn = document.querySelector(".multiply")
+const minusBtn = document.querySelector(".minus")
+const plusBtn = document.querySelector(".plus")
+const divideBtn = document.querySelector(".divide")
+const equalsBtn = document.querySelector(".equals")
+const clearBtn = document.querySelector(".clear")
+
+let displayNumber;
+let firstNum;
+let secondNum;
+let operator;
+let result;
+let isOperatorClicked = false;
+
 function add(a, b) { return a + b }
 function subtract(a, b) { return a - b }
 function multiply(a, b) { return a * b }
@@ -6,30 +23,16 @@ function divide(a, b) {
     return a / b
 }
 
-// function operate(operator, a, b) {
-//     switch (operator) {
-//         case "+":
-//             return add(a, b)
-
-//         case "-":
-//             return subtract(a, b)
-
-//         case "*":
-//             return multiply(a, b)
-
-//         case "/":
-//             return divide(a, b)
-//     }
-// }
-
-const display = document.querySelector(".display")
-const clearBtn = document.querySelector(".clear")
-const allDigits = document.querySelectorAll(".digit")
-
-let displayNumber = null
-
+// when digits are clicked
 allDigits.forEach(digit => {
     digit.addEventListener("click", (e) => {
+        if (isOperatorClicked) {
+            if (displayNumber) {
+                display.removeChild(displayNumber);
+            }
+            displayNumber = null;
+            isOperatorClicked = false;
+        }
         if (!displayNumber) {
             // we wanna check weather displayNumber already exists or not
             displayNumber = document.createElement("p");
@@ -43,79 +46,49 @@ allDigits.forEach(digit => {
     })
 })
 
-const allOperatorBtn = document.querySelectorAll(".op")
-const multiplyBtn = document.querySelector(".multiply")
-const minusBtn = document.querySelector(".minus")
-const plusBtn = document.querySelector(".plus")
-const divideBtn = document.querySelector(".divide")
-const equalsBtn = document.querySelector(".equals")
+// when operator button is clicked
+allOperatorBtn.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+        if (!firstNum) {
+            firstNum = +displayNumber.textContent
+        }
+        else if (operator) {
+            evaluateResult()
+            firstNum = result //THE MOST IMPORTANT LINE OF CODE
+            // IF AN OPERATOR AND A FIRST NUM ALREADY EXIST
+            // IT INVOKES THE EVALUATE FUNCTION WHICH EVALUATES THE SECOND NUM
+            // AND SETS THE RESULT OF THAT EVALUATION AS THE NEW FIRST NUM
+        }
+        operator = e.target.textContent
+        isOperatorClicked = true;
+    })
+})
 
-
-
-
-
-// allOperatorBtn.forEach((btn) => {
-//     btn.addEventListener("click", (e) => {
-//         operateorBtnTarget = e.target
-//         firstNum = document.querySelector(".number")
-//         firstNum = +firstNum.textContent
-//         display.removeChild(displayNumber)
-//         displayNumber = null
-//         operatorBtnCount++
-//     })
-// })
-
-let firstNum;
-let secondNum;
-let operateorBtnTarget;
-let result;
+// equal button 
+equalsBtn.addEventListener("click", evaluateResult)
 
 function evaluateResult() {
     // evaluate the second number
-    secondNum = document.querySelector(".number")
-    secondNum = +secondNum.textContent
-
-    switch (operateorBtnTarget) {
-        case multiplyBtn:
+    secondNum = +displayNumber.textContent
+    switch (operator) {
+        case "*":
             result = multiply(firstNum, secondNum)
             break;
 
-        case minusBtn:
+        case "-":
             result = subtract(firstNum, secondNum)
             break;
 
-        case plusBtn:
+        case "+":
             result = add(firstNum, secondNum)
             break;
 
-        case divideBtn:
+        case "/":
             result = divide(firstNum, secondNum)
             break;
     }
     displayNumber.textContent = result
 }
-
-// equal button 
-equalsBtn.addEventListener("click", evaluateResult)
-
-
-let operatorBtnCount = 0
-allOperatorBtn.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-        if (operatorBtnCount < 1) {
-            operateorBtnTarget = e.target
-            firstNum = document.querySelector(".number")
-            firstNum = +firstNum.textContent
-            display.removeChild(displayNumber)
-            displayNumber = null
-            operatorBtnCount++
-        }
-        else if (operatorBtnCount >= 1) {
-            evaluateResult()
-        }
-    })
-})
-
 
 // CLEAR BUTTON
 clearBtn.addEventListener("click", () => {
@@ -124,7 +97,7 @@ clearBtn.addEventListener("click", () => {
         displayNumber = null;
         firstNum = null
         secondNum = null
-        operatorBtnCount = 0
+        operator = null
+        result = null
     }
 })
-//
