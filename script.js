@@ -7,6 +7,7 @@ const plusBtn = document.querySelector(".plus")
 const divideBtn = document.querySelector(".divide")
 const equalsBtn = document.querySelector(".equals")
 const clearBtn = document.querySelector(".clear")
+const decimal = document.querySelector(".decimal")
 
 let displayNumber;
 let firstNum;
@@ -14,6 +15,7 @@ let secondNum;
 let operator;
 let result;
 let isOperatorClicked = false;
+let isDecimal = false
 
 function add(a, b) { return a + b }
 function subtract(a, b) { return a - b }
@@ -49,6 +51,15 @@ allDigits.forEach(digit => {
     })
 })
 
+// decimal logic
+decimal.addEventListener("click", (e) => {
+    if (!isDecimal) {
+        displayNumber.textContent += e.target.textContent;
+    }
+    isDecimal = true
+})
+
+
 // when operator button is clicked
 allOperatorBtn.forEach((btn) => {
     btn.addEventListener("click", (e) => {
@@ -64,6 +75,7 @@ allOperatorBtn.forEach((btn) => {
         }
         operator = e.target.textContent
         isOperatorClicked = true;
+        isDecimal = false
     })
 })
 
@@ -74,7 +86,7 @@ function evaluateResult() {
     // evaluate the second number
     secondNum = +displayNumber.textContent
     switch (operator) {
-        case "*":
+        case "×":
             result = multiply(firstNum, secondNum)
             break;
 
@@ -91,6 +103,7 @@ function evaluateResult() {
             break;
     }
     displayNumber.textContent = result
+    isDecimal = false
 }
 
 // CLEAR BUTTON
@@ -102,5 +115,6 @@ clearBtn.addEventListener("click", () => {
         secondNum = null
         operator = null
         result = null
+        isDecimal = false
     }
 })
