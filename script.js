@@ -20,7 +20,10 @@ function subtract(a, b) { return a - b }
 function multiply(a, b) { return a * b }
 function divide(a, b) {
     if (b === 0) return displayNumber.textContent = "ERROR"
-    return a / b
+    else {
+        let result = a / b
+        return Math.round(result * 100000) / 100000
+    }
 }
 
 // when digits are clicked
