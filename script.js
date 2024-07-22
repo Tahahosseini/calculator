@@ -120,7 +120,7 @@ function evaluateResult() {
 }
 
 clearBtn.addEventListener("click", () => {
-    if (displayNumber !== null) {
+    if (displayNumber) {
         display.removeChild(displayNumber)
         displayNumber = null
         firstNum = null
