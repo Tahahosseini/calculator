@@ -56,6 +56,16 @@ allDigits.forEach(digit => {
     })
 })
 
+let numberToString
+let stringToNumber
+// backspace logic
+backspace.addEventListener("click", () => {
+    numberToString = displayNumber.textContent.toString()
+    numberToString = numberToString.slice(0, -1)
+    stringToNumber = +numberToString
+    displayNumber.textContent = stringToNumber
+})
+
 // percentage logic
 percent.addEventListener("click", () => {
     displayNumber.textContent = evaluatePercent(displayNumber.textContent)
@@ -68,7 +78,6 @@ decimal.addEventListener("click", (e) => {
     }
     isDecimal = true
 })
-
 
 // when operator button is clicked
 allOperatorBtn.forEach((btn) => {
