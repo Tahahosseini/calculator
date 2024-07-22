@@ -118,10 +118,6 @@ function evaluateResult() {
         case "/":
             result = divide(firstNum, secondNum)
             break;
-
-        // case "%":
-        //     result = evaluatePercent(firstNum)
-        //     break;
     }
     displayNumber.textContent = result
     isDecimal = false
