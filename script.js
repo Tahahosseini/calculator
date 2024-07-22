@@ -1,6 +1,6 @@
 const display = document.querySelector(".display")
-const allDigits = document.querySelectorAll(".digit")
-const allOperatorBtn = document.querySelectorAll(".op")
+const digits = document.querySelectorAll(".digit")
+const operatorBtn = document.querySelectorAll(".op")
 const equalsBtn = document.querySelector(".equals")
 const clearBtn = document.querySelector(".clear")
 const decimal = document.querySelector(".decimal")
@@ -15,32 +15,41 @@ let result;
 let isOperatorClicked = false;
 let isDecimal = false
 
-function add(a, b) { return a + b }
-function subtract(a, b) { return a - b }
-function multiply(a, b) { return a * b }
+function add(a, b) { return roundTo5Decimal(a + b) }
+function subtract(a, b) { return roundTo5Decimal(a - b) }
+function multiply(a, b) { return roundTo5Decimal(a * b) }
 function divide(a, b) {
-    if (b === 0) return displayNumber.textContent = "ERROR"
+    if (b === 0) return "ERROR"
     else {
-        let result = a / b
-        return Math.round(result * 100000) / 100000
+        return roundTo5Decimal(a / b)
     }
 }
-function evaluatePercent(a) {
-    return a * 0.01
+function toPercent(n) {
+    return n * 0.01
 }
 
-// when digits are clicked
-allDigits.forEach(digit => {
-    digit.addEventListener("click", (e) => {    // when a digit is clicked
-        if (isOperatorClicked) {                // if an operator has already been clicked
-            display.removeChild(displayNumber)  // remove the already existing digits
-            displayNumber = null                // reset displayNumber so it can be created in next if statement
-            isOperatorClicked = false           // reset isOperatorClicked so the code doesn't run until another operator click
+function roundTo5Decimal(n) {
+    return Math.round(n * 100000) / 100000
+}
+
+function getDisplayNumText() {
+    return +displayNumber.textContent
+}
+
+function updateDisplayNumText(n) {
+    displayNumber.textContent = n
+}
+
+digits.forEach(digit => {
+    digit.addEventListener("click", (e) => {
+        if (isOperatorClicked) {
+            display.removeChild(displayNumber)
+            displayNumber = null
+            isOperatorClicked = false
         }
         if (!displayNumber) {
-            // we wanna check weather displayNumber already exists or not
             displayNumber = document.createElement("p")
-            displayNumber.textContent = e.target.textContent
+            updateDisplayNumText(e.target.textContent)
             displayNumber.classList.add("number")
             display.appendChild(displayNumber)
         }
@@ -50,22 +59,15 @@ allDigits.forEach(digit => {
     })
 })
 
-let numberToString
-let stringToNumber
-// backspace logic
 backspace.addEventListener("click", () => {
-    numberToString = displayNumber.textContent.toString()
-    numberToString = numberToString.slice(0, -1)
-    stringToNumber = +numberToString
-    displayNumber.textContent = stringToNumber
+    let lastCharRemoved = getDisplayNumText().toString().slice(0, -1)
+    updateDisplayNumText(+lastCharRemoved)
 })
 
-// percentage logic
 percent.addEventListener("click", () => {
-    displayNumber.textContent = evaluatePercent(displayNumber.textContent)
+    updateDisplayNumText(toPercent(getDisplayNumText()))
 })
 
-// decimal logic
 decimal.addEventListener("click", (e) => {
     if (!isDecimal) {
         displayNumber.textContent += e.target.textContent
@@ -73,18 +75,18 @@ decimal.addEventListener("click", (e) => {
     isDecimal = true
 })
 
-// when operator button is clicked
-allOperatorBtn.forEach((btn) => {
+operatorBtn.forEach((btn) => {
     btn.addEventListener("click", (e) => {
         if (!firstNum) {
-            firstNum = +displayNumber.textContent
+            firstNum = getDisplayNumText()
         }
         else if (operator) {
             evaluateResult()
-            firstNum = result //THE MOST IMPORTANT LINE OF CODE
-            // IF AN OPERATOR AND A FIRST NUM ALREADY EXIST
-            // IT INVOKES THE EVALUATE FUNCTION WHICH EVALUATES THE SECOND NUM
-            // AND SETS THE RESULT OF THAT EVALUATION AS THE NEW FIRST NUM
+            firstNum = result // THE MOST IMPORTANT LINE OF CODE
+            // if an operator and a first num already exist
+            // it invokes the evaluate function which evaluates the second num
+            // and sets the result of that evaluation as the new first num
+            // SO MORE THAN A SINGLE PAIR OF NUMBERS CAN BE OPERATED
         }
         operator = e.target.textContent
         isOperatorClicked = true;
@@ -92,12 +94,10 @@ allOperatorBtn.forEach((btn) => {
     })
 })
 
-// equal button 
 equalsBtn.addEventListener("click", evaluateResult)
 
 function evaluateResult() {
-    // evaluate the second number
-    secondNum = +displayNumber.textContent
+    secondNum = getDisplayNumText()
     switch (operator) {
         case "×":
             result = multiply(firstNum, secondNum)
@@ -115,11 +115,10 @@ function evaluateResult() {
             result = divide(firstNum, secondNum)
             break;
     }
-    displayNumber.textContent = result
+    updateDisplayNumText(result)
     isDecimal = false
 }
 
-// CLEAR BUTTON
 clearBtn.addEventListener("click", () => {
     if (displayNumber !== null) {
         display.removeChild(displayNumber)
