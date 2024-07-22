@@ -1,10 +1,6 @@
 const display = document.querySelector(".display")
 const allDigits = document.querySelectorAll(".digit")
 const allOperatorBtn = document.querySelectorAll(".op")
-const multiplyBtn = document.querySelector(".multiply")
-const minusBtn = document.querySelector(".minus")
-const plusBtn = document.querySelector(".plus")
-const divideBtn = document.querySelector(".divide")
 const equalsBtn = document.querySelector(".equals")
 const clearBtn = document.querySelector(".clear")
 const decimal = document.querySelector(".decimal")
@@ -35,11 +31,11 @@ function evaluatePercent(a) {
 
 // when digits are clicked
 allDigits.forEach(digit => {
-    digit.addEventListener("click", (e) => {   // when a digit is clicked
-        if (isOperatorClicked) {               // if an operator has already been clicked
-            display.removeChild(displayNumber) // remove the already existing digits
-            displayNumber = null               // reset displayNumber so it can be created in next if statement
-            isOperatorClicked = false          // reset isOperatorClicked so the code doesn't run until another operator click
+    digit.addEventListener("click", (e) => {    // when a digit is clicked
+        if (isOperatorClicked) {                // if an operator has already been clicked
+            display.removeChild(displayNumber)  // remove the already existing digits
+            displayNumber = null                // reset displayNumber so it can be created in next if statement
+            isOperatorClicked = false           // reset isOperatorClicked so the code doesn't run until another operator click
         }
         if (!displayNumber) {
             // we wanna check weather displayNumber already exists or not
@@ -133,5 +129,6 @@ clearBtn.addEventListener("click", () => {
         operator = null
         result = null
         isDecimal = false
+        isOperatorClicked = false
     }
 })
