@@ -35,23 +35,21 @@ function evaluatePercent(a) {
 
 // when digits are clicked
 allDigits.forEach(digit => {
-    digit.addEventListener("click", (e) => {
-        if (isOperatorClicked) {
-            if (displayNumber) {
-                display.removeChild(displayNumber);
-            }
-            displayNumber = null;
-            isOperatorClicked = false;
+    digit.addEventListener("click", (e) => {   // when a digit is clicked
+        if (isOperatorClicked) {               // if an operator has already been clicked
+            display.removeChild(displayNumber) // remove the already existing digits
+            displayNumber = null               // reset displayNumber so it can be created in next if statement
+            isOperatorClicked = false          // reset isOperatorClicked so the code doesn't run until another operator click
         }
         if (!displayNumber) {
             // we wanna check weather displayNumber already exists or not
-            displayNumber = document.createElement("p");
-            displayNumber.textContent = e.target.textContent;
-            displayNumber.classList.add("number");
-            display.appendChild(displayNumber);
+            displayNumber = document.createElement("p")
+            displayNumber.textContent = e.target.textContent
+            displayNumber.classList.add("number")
+            display.appendChild(displayNumber)
         }
         else {
-            displayNumber.textContent += e.target.textContent;
+            displayNumber.textContent += e.target.textContent
         }
     })
 })
@@ -74,7 +72,7 @@ percent.addEventListener("click", () => {
 // decimal logic
 decimal.addEventListener("click", (e) => {
     if (!isDecimal) {
-        displayNumber.textContent += e.target.textContent;
+        displayNumber.textContent += e.target.textContent
     }
     isDecimal = true
 })
@@ -132,8 +130,8 @@ function evaluateResult() {
 // CLEAR BUTTON
 clearBtn.addEventListener("click", () => {
     if (displayNumber !== null) {
-        display.removeChild(displayNumber);
-        displayNumber = null;
+        display.removeChild(displayNumber)
+        displayNumber = null
         firstNum = null
         secondNum = null
         operator = null
