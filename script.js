@@ -8,6 +8,8 @@ const divideBtn = document.querySelector(".divide")
 const equalsBtn = document.querySelector(".equals")
 const clearBtn = document.querySelector(".clear")
 const decimal = document.querySelector(".decimal")
+const percent = document.querySelector(".percentage")
+const backspace = document.querySelector(".backspace")
 
 let displayNumber;
 let firstNum;
@@ -26,6 +28,9 @@ function divide(a, b) {
         let result = a / b
         return Math.round(result * 100000) / 100000
     }
+}
+function evaluatePercent(a) {
+    return a * 0.01
 }
 
 // when digits are clicked
@@ -49,6 +54,11 @@ allDigits.forEach(digit => {
             displayNumber.textContent += e.target.textContent;
         }
     })
+})
+
+// percentage logic
+percent.addEventListener("click", () => {
+    displayNumber.textContent = evaluatePercent(displayNumber.textContent)
 })
 
 // decimal logic
@@ -101,6 +111,10 @@ function evaluateResult() {
         case "/":
             result = divide(firstNum, secondNum)
             break;
+
+        // case "%":
+        //     result = evaluatePercent(firstNum)
+        //     break;
     }
     displayNumber.textContent = result
     isDecimal = false

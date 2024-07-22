@@ -44,16 +44,20 @@ flex-wrap: wrap;
     height: 80px;
 }
 
-.btn.equals,
-.btn.zero,
-.btn.clear {
+
+.btn.zero {
     width: 50%;
+}
+
+.btn.clear {
+    width: 25%;
 }
 
 .decimal,
 .digit,
-.equals,
-.clear {
+.clear,
+.percentage.btn,
+.backspace {
     background-color: #344d66;
     color: #dddddd;
 }
